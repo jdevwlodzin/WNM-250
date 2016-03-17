@@ -54,6 +54,10 @@
 			#list li:hover .name {
 				bottom: 0;
 			}	
+            
+            .product-link {
+                display: block;
+            }
 			
 			.price {
 				right: -150px;
@@ -111,6 +115,45 @@
                 top: -15px;
             }
 			
+            
+            .product-details {
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+            }
+            
+            .product-details.show {
+                display: block;
+            }
+            
+            .product-details-inner {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                background: #000;
+                width: calc(288px * 2);
+                height: 384px;
+            }
+            
+            .product-detail-image {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            
+            .product-detail-details {
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: calc(288px - 2em);
+                margin: 1em;
+                color: #fff;
+            }
 		</style>
 	</head>
 	<body>
@@ -119,25 +162,79 @@
             <a id="show-cart" href="#">Cart</a>
         </div>
 		
+        <!-- Product list -->
 		<ul id="list">
 			<li>
-				<img src="images/optimized.jpg"  width="288" height="384">
-				<div class="name">Fuzz Face</div>
-				<div class="price">$400,000.00</div>
+                <a id="a" href="#" class="product-link">
+				    <img src="images/optimized.jpg"  width="288" height="384">
+				    <div class="name">Fuzz Face</div>
+				    <div class="price">$400,000.00</div>
+                </a>
 			</li>
 			<li>
-				<img src="images/optimized-1.jpg"  width="288" height="384">
-				<div class="name">Ugly Face</div>
-				<div class="price">$1,200,000.00</div>
+                <a id="b" href="#" class="product-link">
+				    <img src="images/optimized-1.jpg"  width="288" height="384">
+				    <div class="name">Ugly Face</div>
+				    <div class="price">$1,200,000.00</div>
+                </a>
 			</li>
 			<li>
-				<img src="images/optimized-2.jpg"  width="288" height="384">
-				<div class="name">SHO Boost</div>
-				<div class="price">$120,000.00</div>
+                <a id="c" href="#" class="product-link">
+				    <img src="images/optimized-2.jpg"  width="288" height="384">
+				    <div class="name">SHO Boost</div>
+				    <div class="price">$120,000.00</div>
+                </a>
 			</li>
 		</ul>
+        <!-- Product list -->
+        
+        
+        <!-- Product Details -->
+        <div id="a-details" class="product-details">
+            <div class="product-details-inner">
+                <div class="close-button close-details-button"></div>
+                <img class="product-detail-image" src="images/optimized.jpg"  width="288" height="384">
+                <div class="product-detail-details">
+                    <div class="product-detail-name">
+                        <h1>Fuzz Face</h1>
+                        <p>Crazy synthesizer noise maker happy fun time scares the cats.</p>
+                    </div>
+                    <div class="product-detail-price">$400,000.00</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="b-details" class="product-details">
+            <div class="product-details-inner">
+                <div class="close-button close-details-button"></div>
+                <img class="product-detail-image" src="images/optimized-1.jpg"  width="288" height="384">
+                <div class="product-detail-details">
+                    <div class="product-detail-name">
+                        <h1>Fuzz Face</h1>
+                        <p>Crazy synthesizer noise maker happy fun time scares the cats.</p>
+                    </div>
+                    <div class="product-detail-price">$400,000.00</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="c-details" class="product-details">
+            <div class="product-details-inner">
+                <div class="close-button close-details-button"></div>
+                <img class="product-detail-image" src="images/optimized-2.jpg"  width="288" height="384">
+                <div class="product-detail-details">
+                    <div class="product-detail-name">
+                        <h1>Fuzz Face</h1>
+                        <p>Crazy synthesizer noise maker happy fun time scares the cats.</p>
+                    </div>
+                    <div class="product-detail-price">$400,000.00</div>
+                </div>
+            </div>
+        </div>
+        <!-- Product Details -->
 		
         
+        <!-- Shopping Cart -->
         <div id="shopping-cart-container" class="shopping-cart-wrapper hide-cart">
             <div class="shopping-cart">
                 <div id="close-cart-button" class="close-button"></div>
@@ -150,16 +247,11 @@
                 </ul>
             </div>
         </div>
+        <!-- Shopping Cart -->
         
         
-        <div id="product-detail-wrapper">
-            <div>
-                
-            </div>
-        </div>
-    
         
-        
+        <!-- JavaScript -->
         <script src="jquery-2.0.3.min.js"></script>
         <script>
             $("#show-cart").click(function(event){
@@ -169,6 +261,18 @@
             $("#close-cart-button").click(function(event){
                 $("#shopping-cart-container").addClass("hide-cart");
             });
+            
+            $(".product-link").click(function(event){
+                event.preventDefault();
+                var id = $(this).attr("id");
+                console.log("#"+id+"-details");
+                $("#"+id+"-details").addClass("show");
+            });
+            
+            $(".close-details-button").click(function(event){
+                $(this).parents(".product-details").removeClass("show");
+            });
+            
         </script>
 	</body>
 </html>
