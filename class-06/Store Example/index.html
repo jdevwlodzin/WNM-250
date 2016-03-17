@@ -165,21 +165,21 @@
         <!-- Product list ********************************************** -->
 		<ul id="list">
 			<li>
-                <a id="a" href="#" class="product-link">
+                <a id="a" href="#a-details" class="product-link">
 				    <img src="images/optimized.jpg"  width="288" height="384">
 				    <div class="name">Fuzz Face</div>
 				    <div class="price">$400,000.00</div>
                 </a>
 			</li>
 			<li>
-                <a id="b" href="#" class="product-link">
+                <a id="b" href="#b-details" class="product-link">
 				    <img src="images/optimized-1.jpg"  width="288" height="384">
 				    <div class="name">Ugly Face</div>
 				    <div class="price">$1,200,000.00</div>
                 </a>
 			</li>
 			<li>
-                <a id="c" href="#" class="product-link">
+                <a id="c" href="#c-details" class="product-link">
 				    <img src="images/optimized-2.jpg"  width="288" height="384">
 				    <div class="name">SHO Boost</div>
 				    <div class="price">$120,000.00</div>
@@ -269,11 +269,9 @@
             // Handle clicks on .product-link elements
             $(".product-link").click(function(event){
                 event.preventDefault(); // This is a link prevent the default behavior
-                var id = $(this).attr("id"); // Get the id
-                // Log the id to see what it becomes with the added strings
-                console.log("#"+id+"-details");
+                var id = $(this).attr("href"); // Get the id
                 // add the show class to the element "#"+id+"-details"
-                $("#"+id+"-details").addClass("show");
+                $(id).addClass("show");
             });
             
             // Handle clicks on elements with the class name .close-details-button
