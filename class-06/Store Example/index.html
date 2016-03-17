@@ -162,7 +162,7 @@
             <a id="show-cart" href="#">Cart</a>
         </div>
 		
-        <!-- Product list -->
+        <!-- Product list ********************************************** -->
 		<ul id="list">
 			<li>
                 <a id="a" href="#" class="product-link">
@@ -186,10 +186,10 @@
                 </a>
 			</li>
 		</ul>
-        <!-- Product list -->
+        <!-- Product list ********************************************** -->
         
         
-        <!-- Product Details -->
+        <!-- Product Details ********************************************** -->
         <div id="a-details" class="product-details">
             <div class="product-details-inner">
                 <div class="close-button close-details-button"></div>
@@ -231,10 +231,10 @@
                 </div>
             </div>
         </div>
-        <!-- Product Details -->
+        <!-- Product Details ********************************************** -->
 		
         
-        <!-- Shopping Cart -->
+        <!-- Shopping Cart ********************************************** -->
         <div id="shopping-cart-container" class="shopping-cart-wrapper hide-cart">
             <div class="shopping-cart">
                 <div id="close-cart-button" class="close-button"></div>
@@ -247,32 +247,41 @@
                 </ul>
             </div>
         </div>
-        <!-- Shopping Cart -->
+        <!-- Shopping Cart ********************************************** -->
         
         
         
-        <!-- JavaScript -->
+        <!-- JavaScript ********************************************** -->
         <script src="jquery-2.0.3.min.js"></script>
         <script>
+            // Handle clicks on #show-cart
             $("#show-cart").click(function(event){
+                // adds/removes the class hide-cart on #shopping-cart-container
                 $("#shopping-cart-container").toggleClass("hide-cart");
             });
             
+            // Handles clicks on #close-cart-button
             $("#close-cart-button").click(function(event){
+                // add hide-cart class to #shopping-cart-container
                 $("#shopping-cart-container").addClass("hide-cart");
             });
             
+            // Handle clicks on .product-link elements
             $(".product-link").click(function(event){
-                event.preventDefault();
-                var id = $(this).attr("id");
+                event.preventDefault(); // This is a link prevent the default behavior
+                var id = $(this).attr("id"); // Get the id
+                // Log the id to see what it becomes with the added strings
                 console.log("#"+id+"-details");
+                // add the show class to the element "#"+id+"-details"
                 $("#"+id+"-details").addClass("show");
             });
             
+            // Handle clicks on elements with the class name .close-details-button
             $(".close-details-button").click(function(event){
+                // Search up the DOM tree for an element with class .product-details
+                // and remove the class show. 
                 $(this).parents(".product-details").removeClass("show");
             });
-            
         </script>
 	</body>
 </html>
