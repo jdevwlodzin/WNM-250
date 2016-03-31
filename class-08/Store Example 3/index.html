@@ -199,8 +199,9 @@
                     <div class="product-detail-name">
                         <h1>Fuzz Face</h1>
                         <p>Crazy synthesizer noise maker happy fun time scares the cats.</p>
+                        <p><a class="add-to-cart" href="" data-name="Fuzz Face" data-price="200999.00">Add to Cart</a></p>
                     </div>
-                    <div class="product-detail-price">$400,000.00</div>
+                    <div class="product-detail-price">$200,999.00</div>
                 </div>
             </div>
         </div>
@@ -213,6 +214,7 @@
                     <div class="product-detail-name">
                         <h1>Fuzz Face</h1>
                         <p>Crazy synthesizer noise maker happy fun time scares the cats.</p>
+                        <p><a class="add-to-cart" href="" data-name="Ugly Face" data-price="40000.00">Add to Cart</a></p>
                     </div>
                     <div class="product-detail-price">$400,000.00</div>
                 </div>
@@ -225,10 +227,11 @@
                 <img class="product-detail-image" src="images/optimized-2.jpg"  width="288" height="384">
                 <div class="product-detail-details">
                     <div class="product-detail-name">
-                        <h1>Fuzz Face</h1>
+                        <h1>SHO Boost</h1>
                         <p>Crazy synthesizer noise maker happy fun time scares the cats.</p>
+                        <p><a class="add-to-cart" href="" data-name="SHO Boost" data-price="298003.00">Add to Cart</a></p>
                     </div>
-                    <div class="product-detail-price">$400,000.00</div>
+                    <div class="product-detail-price">$298,003.00</div>
                 </div>
             </div>
         </div>
@@ -240,7 +243,7 @@
             <div class="shopping-cart">
                 <div id="close-cart-button" class="close-button"></div>
                 <h1>Shopping cart</h1>
-                <ul>
+                <ul id="cart-ul">
                     <li>Item 1 qty: 3 Price: 1</li>
                     <li>Item 1 qty: 3 Price: 1</li>
                     <li>Item 1 qty: 3 Price: 1</li>
@@ -254,7 +257,65 @@
         
         <!-- JavaScript ********************************************** -->
         <script src="jquery-2.0.3.min.js"></script>
+        <script src="cart.js"></script>
         <script>
+            
+            
+            // ------------------------------------------------------------
+            // This function handles the add-to-cart buttons
+            // ------------------------------------------------------------
+            
+            $(".add-to-cart").click(function(event){
+                event.preventDefault();
+                // Get the name, price, and count for this item from it's data attributes
+                var name = $(this).attr("data-name");
+                var price = $(this).attr("data-price");
+                var count = 1;
+                
+                // Add the item to the cart
+                addItem(name, price, count);
+                
+                // Test add-to-cart with the console.
+                console.log(cart);
+                
+                updateCart();
+            });
+            
+            
+            
+            // -------------------------------------------------------------
+            // This function updates the cart, call it each time you change
+            // the contents of the cart. 
+            // -------------------------------------------------------------
+            function updateCart() {
+                // Make some HTML text that represents the cart
+                var html = "";
+                // Loop through the cart 
+                for (var i in cart) {
+                    // Get the name, price, and count
+                    var name = cart[i].name;
+                    var price = cart[i].price;
+                    var count = cart[i].count;
+                    // Now add some html to the html variable
+                    html += "<li>"+name+" $"+price+" x"+count+"</li>";
+                }
+                
+                // after the loop completes write the html string into the page
+                $("#cart-ul").html(html);
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            // ------------------------------------------------------------
+            // These functions work with the UI elements to hide and show 
+            // products and the shopping cart
+            // ------------------------------------------------------------
+            
             // Handle clicks on #show-cart
             $("#show-cart").click(function(event){
                 // adds/removes the class hide-cart on #shopping-cart-container
@@ -281,6 +342,8 @@
                 // and remove the class show. 
                 $(this).parents(".product-details").removeClass("show");
             });
+            
+            
         </script>
 	</body>
 </html>
