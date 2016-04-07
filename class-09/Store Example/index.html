@@ -276,6 +276,7 @@
         <script src="cart.js"></script>
         <script>
             
+            
             // ------------------------------------------------------------
             // This function handles the add-to-cart buttons
             // ------------------------------------------------------------
@@ -315,6 +316,7 @@
                     html += "<li>"+name+" $"+price+" x "+count;
                     html += "<button class='add-one-item' data-name='"+name+"'>+</button>";
                     html += "<button class='subtract-one-item' data-name='"+name+"'>-</button>";
+                    html += " = "+(price * count);
                     html += "</li>";
                 }
                 
@@ -332,7 +334,7 @@
                 addItem(name);
                 updateCart();
             });
-            
+
             $("body").on("click", ".subtract-one-item", function(event){
                 var name = $(this).attr("data-name");
                 removeItem(name)
