@@ -97,7 +97,7 @@
 			
             
             .shopping-cart-wrapper {
-                position:absolute;
+                position:fixed;
                 left: 0;
                 top: 0;
                 width: 100%;
@@ -133,7 +133,7 @@
             
             .product-details {
                 display: none;
-                position: absolute;
+                position: fixed;
                 left: 0;
                 top: 0;
                 width: 100%;
@@ -170,14 +170,15 @@
                 margin: 1em;
                 color: #fff;
             }
+            
 		</style>
 	</head>
-	<body>
+	<body class="">
         
         <div>
             <a id="show-cart" href="#">Cart</a>
-            You have: <span id="cart-count"></span> items in your cart.
-            Total cost of cart: <span class="cart-total"></span>
+            <span id="cart-count"></span>
+            <span class="cart-total"></span>
         </div>
 		
         <!-- Product list ********************************************** -->
@@ -425,6 +426,7 @@
         <div id="shopping-cart-container" class="shopping-cart-wrapper hide-cart">
             <div class="shopping-cart">
                 <div id="close-cart-button" class="close-button"></div>
+            
                 <h1>Shopping cart</h1>
                 <ul id="cart-ul">
                     <!-- Cart displays here -->
@@ -432,6 +434,7 @@
                 <div>
                     Total: <span class="cart-total"></span>
                 </div>
+                <div><button id="update-cart-button">Update Cart</button></div>
             </div>
         </div>
         <!-- Shopping Cart ********************************************** -->
@@ -471,19 +474,26 @@
             // the contents of the cart. 
             // -------------------------------------------------------------
             function updateCart() {
+                if (cart.length == 0) {
+                    $("#cart-ul").html("Your cart is empty");
+                    $("#cart-count").html("Your cart is empty");
+                    $(".cart-total").html("");
+                    return;
+                }
+                
                 // Make some HTML text that represents the cart
                 var html = "";
                 // Loop through the cart 
                 for (var i in cart) {
                     // Get the name, price, and count
                     var name = cart[i].name;
-                    var price = cart[i].price;
+                    var price = cart[i].price.toFixed(2);
                     var count = cart[i].count;
                     // Now add some html to the html variable
-                    html += "<li>"+name+" $"+price+" x "+count;
+                    html += "<li>"+name+" $"+price+" x <input class='item-count' data-name='"+name+"' type='number' value='"+count+"'>";
                     html += "<button class='add-one-item' data-name='"+name+"'>+</button>";
                     html += "<button class='subtract-one-item' data-name='"+name+"'>-</button>";
-                    html += " = "+(price * count);
+                    html += " = $"+(price * count).toFixed(2);
                     html += "</li>";
                 }
                 
@@ -491,9 +501,11 @@
                 $("#cart-ul").html(html);
                 
                 // Update the cart count and total
-                $("#cart-count").html(getCount());
-                $(".cart-total").html(getTotal());
+                $("#cart-count").html("You have "+getCount()+" items in your cart");
+                $(".cart-total").html("$"+getTotal());
             }
+            
+            updateCart();
             
             
             $("body").on("click", ".add-one-item", function(event){
@@ -509,12 +521,22 @@
             });
             
             
-            var n = 0;
-            for (var i = 0; i < 10; i++) {
-                n += 0.01;
-                console.log(roundTwo(n));
-            }
+            // ***************************************************
+            // Cart input count
             
+            $("body").on("change", ".item-count", function(event){
+                var name = $(this).attr("data-name");
+                var count = Number($(this).val());
+                console.log(name, count);
+                setCountForName(count, name);
+                updateCart();
+            });
+            
+            $("#update-cart-button").submit(function(event){
+                event.preventDefault();
+                
+            });
+            // ***************************************************
             
             
             
@@ -526,12 +548,14 @@
             // Handle clicks on #show-cart
             $("#show-cart").click(function(event){
                 // adds/removes the class hide-cart on #shopping-cart-container
+                // $("body").addClass("show-overlay");
                 $("#shopping-cart-container").toggleClass("hide-cart");
             });
             
             // Handles clicks on #close-cart-button
             $("#close-cart-button").click(function(event){
                 // add hide-cart class to #shopping-cart-container
+                // $("body").removeClass("show-overlay");
                 $("#shopping-cart-container").addClass("hide-cart");
             });
             
@@ -541,6 +565,7 @@
                 var id = $(this).attr("href"); // Get the id
                 // add the show class to the element "#"+id+"-details"
                 $(id).addClass("show");
+                // $("body").addClass("show-overlay");
             });
             
             // Handle clicks on elements with the class name .close-details-button
@@ -548,8 +573,10 @@
                 // Search up the DOM tree for an element with class .product-details
                 // and remove the class show. 
                 $(this).parents(".product-details").removeClass("show");
+                $("body").removeClass("show-overlay");
             });
             
+    
             
         </script>
 	</body>
